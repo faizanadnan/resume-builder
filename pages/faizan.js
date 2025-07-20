@@ -26,51 +26,167 @@ export default function FaizanResume() {
         const printWindow = window.open('', '_blank');
         const resumeContent = resumeRef.current.innerHTML;
 
-        const printStyles = `
+        const compactPrintStyles = `
       <style>
+        /* Reset and base styles */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: white; font-size: 14px; }
-        .resume-container { max-width: 800px; margin: 0 auto; background: white; }
-        .resume-header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%); color: white; padding: 40px; text-align: center; }
-        .name { font-size: 2.5em; font-weight: 700; margin-bottom: 10px; }
-        .title { font-size: 1.2em; opacity: 0.9; margin-bottom: 20px; font-weight: 300; }
-        .contact-info { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px; font-size: 0.9em; }
-        .contact-item { display: flex; align-items: center; gap: 8px; }
-        .main-content { display: grid; grid-template-columns: 1fr 300px; gap: 0; }
-        .left-column { padding: 30px; }
-        .right-column { background: #f8f9fa; padding: 30px 25px; border-left: 1px solid #dee2e6; }
-        .section { margin-bottom: 30px; page-break-inside: avoid; }
-        .section-title { font-size: 1.3em; font-weight: 700; color: #2a5298; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 3px solid #667eea; position: relative; }
-        .section-title::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 30px; height: 3px; background: #f5576c; }
-        .summary { font-size: 1em; line-height: 1.6; color: #555; text-align: justify; }
-        .experience-item { margin-bottom: 25px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); border-left: 4px solid #667eea; page-break-inside: avoid; }
-        .experience-title { font-size: 1.1em; font-weight: 600; color: #2a5298; margin-bottom: 5px; }
-        .company-name { font-size: 1em; font-weight: 600; color: #333; margin-bottom: 8px; }
-        .experience-meta { font-size: 0.85em; color: #666; display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
-        .company-description { font-style: italic; color: #666; margin-bottom: 15px; font-size: 0.9em; }
-        .achievement-list { list-style: none; padding: 0; }
-        .achievement-list li { margin-bottom: 8px; padding-left: 20px; position: relative; color: #555; line-height: 1.5; font-size: 0.9em; }
-        .achievement-list li::before { content: '▶'; position: absolute; left: 0; color: #667eea; font-size: 0.8em; top: 2px; }
-        .skill-category { margin-bottom: 20px; }
-        .skill-category-title { font-size: 1em; font-weight: 600; color: #2a5298; margin-bottom: 10px; }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-        .skill-tag { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 4px 10px; border-radius: 15px; font-size: 0.75em; font-weight: 500; }
-        .project-item { margin-bottom: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); border-left: 4px solid #28a745; }
-        .project-category { background: #007bff; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7em; font-weight: 500; margin-bottom: 10px; display: inline-block; }
-        .project-name { font-weight: 600; color: #2a5298; margin-bottom: 5px; font-size: 1.1em; }
-        .project-year { color: #666; font-size: 0.9em; margin-bottom: 10px; }
-        .project-description { color: #555; font-size: 0.9em; line-height: 1.6; margin-bottom: 15px; }
-        .project-technologies { margin-bottom: 10px; }
-        .project-highlights { margin-top: 10px; }
-        .tech-tag { background: #e9ecef; color: #495057; padding: 2px 6px; border-radius: 8px; font-size: 0.7em; margin-right: 4px; margin-bottom: 4px; display: inline-block; }
-        .highlight-tag { background: #d4edda; color: #155724; padding: 2px 6px; border-radius: 8px; font-size: 0.7em; margin-right: 4px; margin-bottom: 4px; display: inline-block; }
-        .education-item, .certification-item { margin-bottom: 15px; padding: 15px; background: white; border-radius: 6px; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05); }
-        .education-degree, .certification-name { font-weight: 600; color: #2a5298; margin-bottom: 5px; font-size: 0.95em; }
-        .education-school { font-weight: 500; color: #333; margin-bottom: 5px; font-size: 0.9em; }
-        .education-year { color: #666; font-size: 0.8em; }
-        .certification-description { color: #555; font-size: 0.85em; line-height: 1.5; }
-        .highlight { background: linear-gradient(120deg, rgba(102, 126, 234, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%); padding: 2px 4px; border-radius: 3px; font-weight: 600; }
-        @media print { body { print-color-adjust: exact; -webkit-print-color-adjust: exact; } .main-content { grid-template-columns: 1fr; } .right-column { border-left: none; border-top: 1px solid #dee2e6; } }
+        body { 
+          font-family: 'Segoe UI', sans-serif; 
+          line-height: 1.3; 
+          color: #333; 
+          background: white; 
+          font-size: 11px; 
+        }
+        
+        /* Container */
+        .resume-container { 
+          max-width: 100%; 
+          margin: 0; 
+          padding: 0; 
+        }
+        
+        /* Header */
+        .resume-header { 
+          background: linear-gradient(135deg, #1a1a2e, #16213e); 
+          color: white; 
+          padding: 20px 15px; 
+          text-align: center; 
+        }
+        .name { font-size: 2em; font-weight: 700; margin-bottom: 6px; }
+        .title { font-size: 1em; margin-bottom: 12px; }
+        .contact-info { 
+          display: flex; 
+          justify-content: center; 
+          flex-wrap: wrap; 
+          gap: 12px; 
+          font-size: 0.8em; 
+        }
+        .contact-item { display: flex; align-items: center; gap: 4px; }
+        
+        /* Layout */
+        .main-content { display: grid; grid-template-columns: 1fr 250px; gap: 0; }
+        .left-column { padding: 15px 20px; }
+        .right-column { 
+          background: #f8f9fa; 
+          padding: 15px; 
+          border-left: 1px solid #ddd; 
+        }
+        
+        /* Sections */
+        .section { margin-bottom: 16px; }
+        .section-title { 
+          font-size: 1.1em; 
+          font-weight: 700; 
+          color: #2a5298; 
+          margin-bottom: 10px; 
+          padding-bottom: 4px; 
+          border-bottom: 2px solid #667eea; 
+        }
+        
+        /* Summary */
+        .summary { font-size: 0.9em; line-height: 1.4; color: #555; }
+        .summary p { margin-bottom: 6px; }
+        
+        /* Experience */
+        .experience-item { 
+          margin-bottom: 14px; 
+          padding: 12px; 
+          background: white; 
+          border-left: 3px solid #667eea; 
+          border-radius: 4px;
+        }
+        .experience-title { font-size: 1em; font-weight: 600; color: #2a5298; margin-bottom: 3px; }
+        .company-name { font-size: 0.9em; font-weight: 600; margin-bottom: 4px; }
+        .experience-meta { font-size: 0.75em; color: #666; margin-bottom: 8px; }
+        .company-description { font-style: italic; color: #666; margin-bottom: 8px; font-size: 0.8em; }
+        
+        /* Achievement lists */
+        .achievement-list { list-style: none; }
+        .achievement-list li { 
+          margin-bottom: 4px; 
+          padding-left: 12px; 
+          position: relative; 
+          font-size: 0.8em; 
+          line-height: 1.3; 
+        }
+        .achievement-list li::before { 
+          content: '▶'; 
+          position: absolute; 
+          left: 0; 
+          color: #667eea; 
+          font-size: 0.7em; 
+        }
+        
+        /* Projects */
+        .project-item { 
+          margin-bottom: 12px; 
+          padding: 10px; 
+          background: white; 
+          border-left: 3px solid #28a745; 
+          border-radius: 4px;
+        }
+        .project-category { 
+          background: #007bff; 
+          color: white; 
+          padding: 1px 6px; 
+          border-radius: 6px; 
+          font-size: 0.6em; 
+          margin-bottom: 6px; 
+          display: inline-block; 
+        }
+        .project-name { font-weight: 600; color: #2a5298; margin-bottom: 3px; font-size: 0.9em; }
+        .project-year { color: #666; font-size: 0.75em; margin-bottom: 6px; }
+        .project-description { color: #555; font-size: 0.8em; line-height: 1.3; margin-bottom: 8px; }
+        
+        /* Tags */
+        .tech-tag, .highlight-tag { 
+          padding: 1px 4px; 
+          border-radius: 4px; 
+          font-size: 0.6em; 
+          margin-right: 2px; 
+          margin-bottom: 2px; 
+          display: inline-block; 
+        }
+        .tech-tag { background: #e9ecef; color: #495057; }
+        .highlight-tag { background: #d4edda; color: #155724; }
+        
+        /* Skills */
+        .skill-category { margin-bottom: 12px; }
+        .skill-category-title { font-size: 0.85em; font-weight: 600; color: #2a5298; margin-bottom: 6px; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 3px; }
+        .skill-tag { 
+          background: #667eea; 
+          color: white; 
+          padding: 2px 6px; 
+          border-radius: 8px; 
+          font-size: 0.65em; 
+        }
+        
+        /* Education & Certifications */
+        .education-item, .certification-item { 
+          margin-bottom: 10px; 
+          padding: 8px; 
+          background: white; 
+          border-radius: 4px; 
+        }
+        .education-degree, .certification-name { 
+          font-weight: 600; 
+          color: #2a5298; 
+          margin-bottom: 3px; 
+          font-size: 0.85em; 
+        }
+        .education-school { font-weight: 500; margin-bottom: 3px; font-size: 0.8em; }
+        .education-year { color: #666; font-size: 0.7em; }
+        .certification-description { color: #555; font-size: 0.75em; line-height: 1.3; }
+        
+        /* Print optimizations */
+        @media print {
+          body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+          .main-content { grid-template-columns: 1fr; }
+          .right-column { border-left: none; border-top: 1px solid #ddd; }
+          .section { page-break-inside: avoid; margin-bottom: 12px; }
+          .experience-item, .project-item { page-break-inside: avoid; }
+        }
       </style>
     `;
 
@@ -78,8 +194,8 @@ export default function FaizanResume() {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>${faizanResumeData.personalInfo.name} - Professional Resume</title>
-          ${printStyles}
+          <title>${faizanResumeData.personalInfo.name} - Resume</title>
+          ${compactPrintStyles}
         </head>
         <body>
           ${resumeContent}
