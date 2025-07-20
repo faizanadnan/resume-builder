@@ -259,7 +259,7 @@ export default function FaizanResume() {
                                 <Link href="/" className="text-cyan-300 hover:text-white transition-colors">
                                     <ArrowLeft className="w-6 h-6" />
                                 </Link>
-                                <h1 className="text-2xl font-bold neon-text">Sample Resume</h1>
+                                <h1 className="text-2xl font-bold neon-text">Faizan's Resume</h1>
                             </div>
 
                             <div className="flex items-center space-x-4">
@@ -290,7 +290,7 @@ export default function FaizanResume() {
                             <span>🌟 <strong>Enhanced Resume:</strong> Mohammad Faizan's professional resume with ML expertise and project skills.</span>
                             <div className="flex items-center gap-2">
                                 <Brain className="w-4 h-4" />
-                                <span>ML Engineer</span>
+                                <span>Senior Engineer</span>
                                 <Code className="w-4 h-4" />
                                 <span>11+ Years</span>
                             </div>
